@@ -168,7 +168,12 @@ ai_tab = st.tabs(["AI Report"])[0]
 with ai_tab:
     st.subheader("Generate AI Report (Markdown)")
     st.caption("Describe what you want (e.g., *Write an executive summary for Industrial & Water Treatment, focus on Controller and Benchtop, highlight 3–5 year devices*).")
-    user_req = st.text_area("Your request", height=120, placeholder="E.g., Create a one-page executive summary focusing on top 5 industries by device count...")
+    #user_req = st.text_area("Your request", height=120, placeholder="E.g., Create a one-page executive summary focusing on top 5 industries by device count...")
+    user_req = st.text_area(
+    "Nhập yêu cầu báo cáo (bằng tiếng Việt)",
+    height=120,
+    placeholder="Ví dụ: Viết báo cáo tóm tắt về thị phần ngành Industrial và Water Treatment, tập trung vào thiết bị Controller và Benchtop, nhấn mạnh nhóm 3-5 năm..."
+)
     model_choice = st.selectbox("Model", ["gpt-4o-mini", "gpt-4o"], index=0)
     run = st.button("Generate Report")
     if run and user_req.strip():
