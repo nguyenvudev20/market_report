@@ -144,12 +144,25 @@ with tab4:
 
 # --- AI Report Tab ---
 with st.expander("🔐 OpenAI API Key (optional for AI-generated reports)"):
-    st.write("Set your key securely via **Secrets** on Streamlit Cloud, or enter it here for local testing.")
+    st.write("App sẽ ưu tiên đọc API key từ **Streamlit Secrets** hoặc biến môi trường.")
     
-    _manual_key = st.text_input(os.getenv("OPENAI_API_KEY"), type="password", help="Leave empty to rely on environment/secrets.")
-    if _manual_key:
-        import os
-        os.environ["OPENAI_API_KEY"] = _manual_key
+    import os
+    # Ưu tiên lấy từ secrets (Streamlit Cloud) hoặc environment variable
+    api_key = None
+    if "OPENAI_API_KEY" in st.secrets:
+        api_key = st.secrets["OPENAI_API_KEY"]
+        os.environ["OPENAI_API_KEY"] = api_key
+        st.success("🔑 API Key đã được nạp từ Secrets.")
+    elif os.getenv("OPENAI_API_KEY"):
+        api_key = os.getenv("OPENAI_API_KEY")
+        st.success("🔑 API Key đã được nạp từ Environment Variable.")
+    else:
+        # Cho phép nhập tay nếu chạy local
+        _manual_key = st.text_input("Nhập OPENAI_API_KEY", type="password", help="Chỉ dùng khi chạy local")
+        if _manual_key:
+            os.environ["OPENAI_API_KEY"] = _manual_key
+            api_key = _manual_key
+            st.success("🔑 API Key đã được nhập thủ công.")
 
 ai_tab = st.tabs(["AI Report"])[0]
 with ai_tab:
