@@ -141,31 +141,5 @@ with tab4:
     else:
         st.info("Columns missing: Industry and/or Age.")
 
-
-# --- AI Report Tab ---
-with st.expander("🔐 OpenAI API Key (optional for AI-generated reports)"):
-    st.write("Set your key securely via **Secrets** on Streamlit Cloud, or enter it here for local testing.")
-    _manual_key = st.text_input("OPENAI_API_KEY", type="password", help="Leave empty to rely on environment/secrets.")
-    if _manual_key:
-        import os
-        os.environ["OPENAI_API_KEY"] = _manual_key
-
-ai_tab = st.tabs(["AI Report"])[0]
-with ai_tab:
-    st.subheader("Generate AI Report (Markdown)")
-    st.caption("Describe what you want (e.g., *Write an executive summary for Industrial & Water Treatment, focus on Controller and Benchtop, highlight 3–5 year devices*).")
-    user_req = st.text_area("Your request", height=120, placeholder="E.g., Create a one-page executive summary focusing on top 5 industries by device count...")
-    model_choice = st.selectbox("Model", ["gpt-4o-mini", "gpt-4o"], index=0)
-    run = st.button("Generate Report")
-    if run and user_req.strip():
-        try:
-            from ai_report import generate_report
-            md = generate_report(df_f if len(df_f) else df, user_req, model=model_choice)
-            st.markdown(md)
-            st.download_button("Download Markdown", md.encode("utf-8"), file_name="market_report.md", mime="text/markdown")
-        except Exception as e:
-            st.error(f"Failed to generate report: {e}")
-
-
 st.markdown("---")
 st.caption("Tip: Use the sidebar to filter by Industry, Instrument Type, Manufacturer, and Age. Upload a new Excel file to refresh the analysis.")
