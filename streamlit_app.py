@@ -145,7 +145,8 @@ with tab4:
 # --- AI Report Tab ---
 with st.expander("🔐 OpenAI API Key (optional for AI-generated reports)"):
     st.write("Set your key securely via **Secrets** on Streamlit Cloud, or enter it here for local testing.")
-    _manual_key = st.text_input("OPENAI_API_KEY", type="password", help="Leave empty to rely on environment/secrets.")
+    
+    _manual_key = st.text_input(os.getenv("OPENAI_API_KEY"), type="password", help="Leave empty to rely on environment/secrets.")
     if _manual_key:
         import os
         os.environ["OPENAI_API_KEY"] = _manual_key
