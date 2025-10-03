@@ -45,7 +45,7 @@ st.title("📊 Vietnam Market Share Report")
 st.caption("Phân tích tương tác theo **Industry · Parameter/Method · Instrument Type · Manufacturer · Age**")
 
 # Sidebar: file
-default_candidates = [Path("data/Market_Analysis_Report.xlsx"), Path("data/Vietnam_6789_2025_Market Share Report.xlsm")]
+default_candidates = [Path("data/data.xlsx")]
 available_default = next((p for p in default_candidates if p.exists()), None)
 uploaded = st.sidebar.file_uploader("Tải file Excel (.xlsx/.xlsm)", type=["xlsx", "xlsm"])
 
